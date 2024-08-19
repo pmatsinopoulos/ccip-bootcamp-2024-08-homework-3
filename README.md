@@ -32,3 +32,13 @@ chrome extension by sending LINK to the contract address.
 
 Then I use the `https://testnet.snowtrace.io/address/0x5425890298aed601595a70AB815c96711a31Bc65/contract/43113/writeProxyContract?chainid=43113`
 to approve the TransferUSDC contract to spend 1 USDC on behave of myself.
+
+Then I call the `TransferUSDC#transferUsdc()` function:
+
+```bash
+$ npx hardhat --network avalancheFuji run scripts/transferUsdcToMyEthereumSepoliaWallet.ts
+```
+
+Then I watched the transaction via CCIP Explorer until it went to status `success`.
+
+Then I confirmed that my wallet had 1 extra USDC on Ethereum Sepolia.
