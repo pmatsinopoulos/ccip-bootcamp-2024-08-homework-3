@@ -26,3 +26,6 @@ Then I allowed Ethereum Sepolia as destination on Avalanche Fuji TransferUSDC co
 ```bash
 $ npx hardhat --network avalancheFuji run scripts/allowEthereumSepolia.ts
 ```
+
+Then, on AvalancheFuji, I fund TransferUSDC with 3 LINK. This I can do it from my Metamask
+chrome extension by sending LINK to the contract address.
