@@ -20,3 +20,9 @@ $ npx hardhat ignition deploy ./ignition/modules/TransferUSDC.ts --network avala
 ```
 
 This deployed the `TransferUSDC` contract to Avalanche Fuji.
+
+Then I allowed Ethereum Sepolia as destination on Avalanche Fuji TransferUSDC contract:
+
+```bash
+$ npx hardhat --network avalancheFuji run scripts/allowEthereumSepolia.ts
+```
