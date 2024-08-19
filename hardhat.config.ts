@@ -1,5 +1,9 @@
-import { HardhatUserConfig } from "hardhat/config";
+import { HardhatUserConfig, vars } from "hardhat/config";
 import "@nomicfoundation/hardhat-toolbox";
+import CustomNetworkConfig from "./types/CustomNetworkConfig";
+
+const INFURA_API_KEY = vars.get("INFURA_API_KEY");
+const WALLET_ACCOUNT_PRIVATE_KEY = vars.get("WALLET_ACCOUNT_PRIVATE_KEY");
 
 const config: HardhatUserConfig = {
   solidity: {
@@ -16,6 +20,15 @@ const config: HardhatUserConfig = {
         },
       },
     },
+  },
+  networks: {
+    avalancheFuji: {
+      url: `https://avalanche-fuji.infura.io/v3/${INFURA_API_KEY}`,
+      accounts: [WALLET_ACCOUNT_PRIVATE_KEY],
+      ccipRouter: "0xF694E193200268f9a4868e4Aa017A0118C9a8177",
+      linkToken: "0x0b9d5D9136855f6FEc3c0993feE6E9CE8a297846",
+      usdcToken: "0x5425890298aed601595a70AB815c96711a31Bc65",
+    } as CustomNetworkConfig,
   },
 };
 

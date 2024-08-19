@@ -11,3 +11,12 @@ REPORT_GAS=true npx hardhat test
 npx hardhat node
 npx hardhat ignition deploy ./ignition/modules/Lock.ts
 ```
+
+# Day 3, Exercise 4
+
+I have used
+```bash
+$ npx hardhat ignition deploy ./ignition/modules/TransferUSDC.ts --network avalancheFuji
+```
+
+This deployed the `TransferUSDC` contract to Avalanche Fuji.
