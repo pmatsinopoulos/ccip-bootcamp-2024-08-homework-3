@@ -42,3 +42,27 @@ $ npx hardhat --network avalancheFuji run scripts/transferUsdcToMyEthereumSepoli
 Then I watched the transaction via CCIP Explorer until it went to status `success`.
 
 Then I confirmed that my wallet had 1 extra USDC on Ethereum Sepolia.
+
+# Day 3, Homework 3
+
+The first part of the homework was to do a gas estimation in my local environment,
+by writing a test.
+
+I wrote the test [test/EstimateCcipReceiveGas.ts](./test/EstimateCcipReceiveGas.ts).
+
+When I ran it with
+
+```bash
+$ npx hardhat test --grep 'gas estimation'
+```
+
+I got back the results:
+
+```
+  Sender and Receiver
+Gas Estimation TEST
+Final Gas Usage Report:
+Number of iterations 0 - Gas used: 6386
+Number of iterations 50 - Gas used: 12786
+Number of iterations 99 - Gas used: 19058
+```
