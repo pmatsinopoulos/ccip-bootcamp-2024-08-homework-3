@@ -1,9 +1,13 @@
-import { HardhatUserConfig, vars } from "hardhat/config";
+import * as envEnc from "@chainlink/env-enc";
+import { HardhatUserConfig } from "hardhat/config";
 import "@nomicfoundation/hardhat-toolbox";
 import CustomNetworkConfig from "./types/CustomNetworkConfig";
 
-const INFURA_API_KEY = vars.get("INFURA_API_KEY");
-const WALLET_ACCOUNT_PRIVATE_KEY = vars.get("WALLET_ACCOUNT_PRIVATE_KEY");
+envEnc.config();
+
+const INFURA_API_KEY = process.env.HARDHAT_VAR_INFURA_API_KEY || "";
+const WALLET_ACCOUNT_PRIVATE_KEY =
+  process.env.HARDHAT_VAR_WALLET_ACCOUNT_PRIVATE_KEY || "";
 
 const config: HardhatUserConfig = {
   solidity: {
