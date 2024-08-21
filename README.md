@@ -43,7 +43,7 @@ Then I watched the transaction via CCIP Explorer until it went to status `succes
 
 Then I confirmed that my wallet had 1 extra USDC on Ethereum Sepolia.
 
-# Day 3, Homework 3
+# Day 3, Homework 3 - Preparation
 
 The first part of the homework was to do a gas estimation in my local environment,
 by writing a test.
@@ -130,3 +130,20 @@ Then I went Tenderly to locate the transactions and the `_callWithExactGasSafeRe
 | 99                   | 26485                         | 26485                         | 18932               |
 
 I can see that in testnet, the gas used was quite less. Maybe because I executed the CCIP transfers the next day?
+
+Then i used Offchain methods.
+
+First the estimation of gas using a Web3 provider
+
+```bash
+$ npm run estimate-gas-provider
+```
+
+which returned:
+
+Final Gas Usage Report:
+Number of iterations: 0 - Gas used: 6609
+Number of iterations: 50 - Gas used: 13022
+Number of iterations: 99 - Gas used: 19306
+
+These results are quite close the testnet results. A little bit higher.
