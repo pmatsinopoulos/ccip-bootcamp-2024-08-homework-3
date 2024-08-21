@@ -1,5 +1,6 @@
-// Import environment variable handling from the Chainlink library to access sensitive or configurable values securely.
-require("@chainlink/env-enc").config();
+import * as envEnc from "@chainlink/env-enc";
+envEnc.config();
+
 // Import the Axios library for making HTTP requests.
 import axios from "axios";
 // Import configuration settings for CCIP (Cross-Chain Interoperability Protocol).
@@ -7,7 +8,7 @@ import { getCCIPConfig } from "../ccip.config";
 // Import a helper function for building transaction data.
 import { buildTransactionData } from "./helper";
 // Import test data, which includes sender and receiver addresses.
-import testData from "../data.json";
+import testData from "./generatedData.json";
 
 /**
  * Simulates transactions and estimates gas usage by interacting with the Tenderly API.

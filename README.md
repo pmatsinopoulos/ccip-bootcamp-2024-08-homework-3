@@ -131,7 +131,7 @@ Then I went Tenderly to locate the transactions and the `_callWithExactGasSafeRe
 
 I can see that in testnet, the gas used was quite less. Maybe because I executed the CCIP transfers the next day?
 
-Then i used Offchain methods.
+Then I used Offchain methods.
 
 First the estimation of gas using a Web3 provider
 
@@ -147,3 +147,18 @@ Number of iterations: 50 - Gas used: 13022
 Number of iterations: 99 - Gas used: 19306
 
 These results are quite close the testnet results. A little bit higher.
+
+Then I used the Offchain method with Tenderly.
+
+```bash
+$ npm run estimate-gas-tenderly
+```
+
+which returned:
+
+Final Gas Usage Report:
+Number of iterations: 0 - Gas used: 6260
+Number of iterations: 50 - Gas used: 12660
+Number of iterations: 99 - Gas used: 18932
+
+This actually, was **very accurate**. Compare it to the testnet results above.

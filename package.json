@@ -5,7 +5,8 @@
   "author": "Panagiotis Matsinopoulos",
   "license": "MIT",
   "scripts": {
-    "estimate-gas-provider": "ts-node scripts/estimateGasProvider.ts"
+    "estimate-gas-provider": "ts-node scripts/estimateGasProvider.ts",
+    "estimate-gas-tenderly": "ts-node scripts/estimateGasTenderly.ts"
   },
   "devDependencies": {
     "@chainlink/contracts-ccip": "^1.4.0",
