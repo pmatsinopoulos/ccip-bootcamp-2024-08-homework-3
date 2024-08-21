@@ -198,3 +198,38 @@ Writing to config file: ./scripts/generatedData.json {
 ```
 
 happily having deployed and verified the contract.
+
+On step 2, I have created the file `CrossChainReceiver.sol`. I have compiled it using `npx hardhat compile`, after
+having, first, corrected some errors (wrong paths to imported files).
+
+Then I deployed this contract on Ethereum Sepolia:
+
+```bash
+$ npx hardhat --network ethereumSepolia run scripts/deployCrossChainReceiver.ts
+```
+
+This printed out:
+
+```
+wait for 5 blocks
+CrossChainReceiver contract deployed at: 0x5449951e0a77df2A75beF0F2b724b68F22B1f557
+Verifying CrossChainReceiver contract on ethereumSepolia...
+Successfully submitted source code for contract
+contracts/CrossChainReceiver.sol:CrossChainReceiver at 0x5449951e0a77df2A75beF0F2b724b68F22B1f557
+for verification on the block explorer. Waiting for verification result...
+
+Successfully verified contract CrossChainReceiver on the block explorer.
+https://sepolia.etherscan.io/address/0x5449951e0a77df2A75beF0F2b724b68F22B1f557#code
+
+CrossChainReceiver contract verified on ethereumSepolia!
+Writing to config file: ./scripts/generatedData.json {
+  avalancheFuji: { sender: '0xA726270ddddAcfE794c291A594d79fA16F9720E6' },
+  ethereumSepolia: {
+    receiver: '0x255C2FE20c414E93e51162C73E044e17d6afedAc',
+    swapTestnetUSDCAddress: '0x5129A2bd7F6F8eA96C3184e1282bd07b2Be53A1B',
+    crossChainReceiverAddress: '0x5449951e0a77df2A75beF0F2b724b68F22B1f557'
+  }
+}
+```
+
+which happily confirmed that the contract is deployed and verified.

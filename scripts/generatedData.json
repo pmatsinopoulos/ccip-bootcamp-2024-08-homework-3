@@ -4,6 +4,7 @@
   },
   "ethereumSepolia": {
     "receiver": "0x255C2FE20c414E93e51162C73E044e17d6afedAc",
-    "swapTestnetUSDCAddress": "0x5129A2bd7F6F8eA96C3184e1282bd07b2Be53A1B"
+    "swapTestnetUSDCAddress": "0x5129A2bd7F6F8eA96C3184e1282bd07b2Be53A1B",
+    "crossChainReceiverAddress": "0x5449951e0a77df2A75beF0F2b724b68F22B1f557"
   }
 }
