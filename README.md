@@ -233,3 +233,17 @@ Writing to config file: ./scripts/generatedData.json {
 ```
 
 which happily confirmed that the contract is deployed and verified.
+
+Then I need to allow `Avalanche Fuji` as the source chain on `Ethereum Sepolia`, The `TransferUSDC` contract on `Avalanche Fuji` as allowed sender in
+`CrossChainReceiver` in `Ethereum Sepolia`. So, I need to call two functions:
+
+- `allowlistSourceChain()` and
+- `allowlistSender()`
+
+both on `Ethereum Sepolia#CrossChainReceiver` smart contract.
+
+I do it with the script:
+
+```bash
+$ npx hardhat --network ethereumSepolia run scripts/allowAvalancheFujiForCrossChainReceiver.ts
+```
