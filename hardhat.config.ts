@@ -43,6 +43,23 @@ const config: HardhatUserConfig = {
       chainSelector: "16015286601757825753",
     } as CustomNetworkConfig,
   },
+  etherscan: {
+    apiKey: {
+      sepolia: process.env.ETHERSCAN_API_KEY || "UNSET",
+      avalancheFuji: "avalancheFuji",
+    },
+    customChains: [
+      {
+        network: "avalancheFuji",
+        chainId: 43113,
+        urls: {
+          apiURL:
+            "https://api.routescan.io/v2/network/testnet/evm/43113/etherscan",
+          browserURL: "https://testnet.snowtrace.io",
+        },
+      },
+    ],
+  },
 };
 
 export default config;
