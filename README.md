@@ -162,3 +162,39 @@ Number of iterations: 50 - Gas used: 12660
 Number of iterations: 99 - Gas used: 18932
 
 This actually, was **very accurate**. Compare it to the testnet results above.
+
+# Day 3, Homework 3 - Actual
+
+I am now following the [Exercise #2: Deposit transferred USDC to Compound V3](https://cll-devrel.gitbook.io/ccip-masterclass-4/ccip-masterclass/exercise-2-deposit-transferred-usdc-to-compound-v3)
+
+I create the `SwapTestnetUSDC.sol` file and I copy / paste the content from the page of the exercise.
+
+Then I deploy the `SwapTestnetUSDC` contract in Ethereum Sepolia and I verify it:
+
+```bash
+$ npx hardhat --network ethereumSepolia run scripts/deploySwapTestnetUSDC.ts
+```
+This printed:
+
+```
+wait for 5 blocks
+SwapTestnetUSDC contract deployed at: 0x5129A2bd7F6F8eA96C3184e1282bd07b2Be53A1B
+Verifying SwapTestnetUSDC contract on ethereumSepolia...
+Successfully submitted source code for contract
+contracts/SwapTestnetUSDC.sol:SwapTestnetUSDC at 0x5129A2bd7F6F8eA96C3184e1282bd07b2Be53A1B
+for verification on the block explorer. Waiting for verification result...
+
+Successfully verified contract SwapTestnetUSDC on the block explorer.
+https://sepolia.etherscan.io/address/0x5129A2bd7F6F8eA96C3184e1282bd07b2Be53A1B#code
+
+SwapTestnetUSDC contract verified on ethereumSepolia!
+Writing to config file: ./scripts/generatedData.json {
+  avalancheFuji: { sender: '0xA726270ddddAcfE794c291A594d79fA16F9720E6' },
+  ethereumSepolia: {
+    receiver: '0x255C2FE20c414E93e51162C73E044e17d6afedAc',
+    swapTestnetUSDCAddress: '0x5129A2bd7F6F8eA96C3184e1282bd07b2Be53A1B'
+  }
+}
+```
+
+happily having deployed and verified the contract.

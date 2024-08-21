@@ -12,7 +12,12 @@ export async function createOrUpdateConfigFile(
   {
     senderAddress,
     receiverAddress,
-  }: { senderAddress?: string; receiverAddress?: string }
+    swapTestnetUSDCAddress,
+  }: {
+    senderAddress?: string;
+    receiverAddress?: string;
+    swapTestnetUSDCAddress?: string;
+  }
 ) {
   const deployedContracts = "./scripts/generatedData.json"; // Path to the config file.
   let config: any = {}; // Initialize an empty config object.
@@ -25,9 +30,10 @@ export async function createOrUpdateConfigFile(
 
     // Ensure the network object exists in the configuration.
     config[network] = config[network] || {};
-    // Update sender and receiver addresses if provided.
     if (senderAddress) config[network].sender = senderAddress;
     if (receiverAddress) config[network].receiver = receiverAddress;
+    if (swapTestnetUSDCAddress)
+      config[network].swapTestnetUSDCAddress = swapTestnetUSDCAddress;
   } else {
     // Create a new configuration object for the network if the file does not exist.
     // This handles adding sender or receiver independently, creating a new network config if needed.
@@ -42,6 +48,13 @@ export async function createOrUpdateConfigFile(
       config = {
         [network]: {
           receiver: receiverAddress,
+        },
+      };
+    }
+    if (swapTestnetUSDCAddress) {
+      config = {
+        [network]: {
+          swapTestnetUSDCAddress: swapTestnetUSDCAddress,
         },
       };
     }
