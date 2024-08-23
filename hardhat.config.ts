@@ -11,18 +11,9 @@ const WALLET_ACCOUNT_PRIVATE_KEY =
 
 const config: HardhatUserConfig = {
   solidity: {
-    version: "0.8.26",
+    version: "0.8.20",
     settings: {
-      evmVersion: "shanghai",
-      viaIR: true,
-      optimizer: {
-        enabled: true,
-        details: {
-          yulDetails: {
-            optimizerSteps: "u",
-          },
-        },
-      },
+      evmVersion: "paris",
     },
   },
   networks: {
