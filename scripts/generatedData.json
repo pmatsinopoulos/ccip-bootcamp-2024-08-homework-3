@@ -1,0 +1,10 @@
+{
+  "avalancheFuji": {
+    "sender": "0x0138508695c639D83aAdB964D66963D27f0EaD21"
+  },
+  "ethereumSepolia": {
+    "receiver": "0xDadF21EE6E2852217e5DE8FF092a1a820977C7A1",
+    "swapTestnetUSDCAddress": "0x5129A2bd7F6F8eA96C3184e1282bd07b2Be53A1B",
+    "crossChainReceiverAddress": "0xDadF21EE6E2852217e5DE8FF092a1a820977C7A1"
+  }
+}

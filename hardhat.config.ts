@@ -11,18 +11,9 @@ const WALLET_ACCOUNT_PRIVATE_KEY =
 
 const config: HardhatUserConfig = {
   solidity: {
-    version: "0.8.26",
+    version: "0.8.20",
     settings: {
-      evmVersion: "shanghai",
-      viaIR: true,
-      optimizer: {
-        enabled: true,
-        details: {
-          yulDetails: {
-            optimizerSteps: "u",
-          },
-        },
-      },
+      evmVersion: "paris",
     },
   },
   networks: {
@@ -35,13 +26,33 @@ const config: HardhatUserConfig = {
       chainSelector: "",
     } as CustomNetworkConfig,
     ethereumSepolia: {
-      url: `https://sepolia.infura.io/v3/${INFURA_API_KEY}`,
       accounts: [WALLET_ACCOUNT_PRIVATE_KEY],
-      ccipRouter: "",
-      linkToken: "",
-      usdcToken: "",
+      ccipRouter: "0x0BF3dE8c5D3e8A2B34D2BEeB17ABfCeBaf363A59",
       chainSelector: "16015286601757825753",
+      compoundUsdcToken: "0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238",
+      cometAddress: "0xAec1F48e02Cfb822Be958B68C7957156EB3F0b6e",
+      fauceteer: "0x68793eA49297eB75DFB4610B68e076D2A5c7646C",
+      linkToken: "",
+      url: `https://sepolia.infura.io/v3/${INFURA_API_KEY}`,
+      usdcToken: "0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238",
     } as CustomNetworkConfig,
+  },
+  etherscan: {
+    apiKey: {
+      sepolia: process.env.ETHERSCAN_API_KEY || "UNSET",
+      avalancheFuji: "avalancheFuji",
+    },
+    customChains: [
+      {
+        network: "avalancheFuji",
+        chainId: 43113,
+        urls: {
+          apiURL:
+            "https://api.routescan.io/v2/network/testnet/evm/43113/etherscan",
+          browserURL: "https://testnet.snowtrace.io",
+        },
+      },
+    ],
   },
 };
 
