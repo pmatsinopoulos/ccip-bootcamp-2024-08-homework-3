@@ -2,6 +2,7 @@
 pragma solidity ^0.8.19;
 
 // Panagiotis Matsinopoulos, for the CCIP Bootcamp, 2024, August, Day 3, Exercise 4
+// Version on Paris EVM with out viaIR optimizer
 
 import {IRouterClient} from "@chainlink/contracts-ccip/src/v0.8/ccip/interfaces/IRouterClient.sol";
 import {OwnerIsCreator} from "@chainlink/contracts-ccip/src/v0.8/shared/access/OwnerIsCreator.sol";

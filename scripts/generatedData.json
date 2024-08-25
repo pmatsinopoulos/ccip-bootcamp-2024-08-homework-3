@@ -1,10 +1,10 @@
 {
   "avalancheFuji": {
-    "sender": "0xA726270ddddAcfE794c291A594d79fA16F9720E6"
+    "sender": "0x0138508695c639D83aAdB964D66963D27f0EaD21"
   },
   "ethereumSepolia": {
-    "receiver": "0x255C2FE20c414E93e51162C73E044e17d6afedAc",
+    "receiver": "0xDadF21EE6E2852217e5DE8FF092a1a820977C7A1",
     "swapTestnetUSDCAddress": "0x5129A2bd7F6F8eA96C3184e1282bd07b2Be53A1B",
-    "crossChainReceiverAddress": "0x5449951e0a77df2A75beF0F2b724b68F22B1f557"
+    "crossChainReceiverAddress": "0xDadF21EE6E2852217e5DE8FF092a1a820977C7A1"
   }
 }

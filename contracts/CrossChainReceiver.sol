@@ -11,6 +11,7 @@ import {EnumerableMap} from "@chainlink/contracts-ccip/src/v0.8/vendor/openzeppe
 // Panagiotis Matsinopoulos as a copy from here
 // https://cll-devrel.gitbook.io/ccip-masterclass-4/ccip-masterclass/exercise-2-deposit-transferred-usdc-to-compound-v3
 // when working on the Homework for Day 3 of the CCIP Bootcamp
+// compile again with no viaIR and EVM Paris
 
 interface CometMainInterface {
     function supply(address asset, uint amount) external;

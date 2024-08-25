@@ -1,99 +1,96 @@
-import { ethers, network } from "hardhat";
+import hre, { ethers, network } from "hardhat";
 import { SupportedNetworks, getCCIPConfig } from "../ccip.config";
 import deployedContracts from "./generatedData.json";
+import CustomNetworkConfig from "../types/CustomNetworkConfig";
 
 // This function is designed to send CCIP messages across networks using the deployed Sender contract.
 async function sendCCIPMessages(currentNetwork: SupportedNetworks) {
-  // Retrieve the current signer to use for transactions.
-  const [signer] = await ethers.getSigners();
+  // Retrieve the current signer to use for transactions. This will be Avalanche Fuji.
+
+  console.debug("currentNetwork", currentNetwork);
+
+  const provider = ethers.provider;
+  const signer = await provider.getSigner();
+  const balance = await provider.getBalance(signer);
+
+  const balanceFormatted = ethers.formatEther(balance);
+
+  console.debug("balanceFormatted", balanceFormatted);
 
   // Retrieve the Sender contract's instance using its address for the current network.
   const senderAddress = (
     deployedContracts[currentNetwork] as { sender: string }
-  ).sender;
-  // Retrieve the address of the LINK token for the current network.
-  const linkTokenAddress = getCCIPConfig(currentNetwork).linkToken;
-  // Instantiate the Sender and LINK token contracts for interaction.
-  const sender = await ethers.getContractAt("Sender", senderAddress);
-  const linkToken = await ethers.getContractAt(
-    "BurnMintERC677",
-    linkTokenAddress
+  ).sender; // This is the TransferUSDC on Avalanche Fuji for example
+
+  console.debug("senderAddress", senderAddress);
+  const sender = await ethers.getContractAt(
+    "TransferUSDC",
+    senderAddress,
+    signer
   );
 
-  // Approve the LINK token contract to spend tokens on behalf of the sender contract.
-  console.log(
-    `Approving ${linkTokenAddress} for ${senderAddress}. Allowance is ${ethers.MaxUint256}. Signer ${signer.address}...`
+  console.debug("sender (TransferUSDC) contract", sender);
+  // -------------------------------------------------------
+
+  const ethereumSepoliaNetwork = hre.config.networks
+    .ethereumSepolia as CustomNetworkConfig;
+
+  const destinationChainSelector = ethereumSepoliaNetwork.chainSelector; // Ethereum Sepolia
+
+  const gasLimit = 500_000;
+
+  console.debug(
+    "destinationChainSelector",
+    destinationChainSelector,
+    "receiver",
+    signer,
+    "amount",
+    1_000_000,
+    "gasLimit",
+    gasLimit
   );
-  let tx = await linkToken.approve(senderAddress, ethers.MaxUint256);
-  // Wait for the transaction to be confirmed with 5 block confirmations.
-  await tx.wait(5);
 
-  // Define parameters for the test messages to be sent.
-  const testParams = [
-    { iterations: 0, gasLimit: 5685 }, // Scenario with minimum iterations
-    { iterations: 50, gasLimit: 16190 }, // Scenario with average iterations
-    { iterations: 99, gasLimit: 26485 }, // Scenario with maximum iterations
-  ];
+  const tx = await sender.transferUsdc(
+    destinationChainSelector,
+    signer,
+    1,
+    gasLimit
+  );
 
-  // Initialize an array to store the IDs of the sent messages.
-  const messageIds = [];
+  console.debug("tx", tx);
 
-  // Loop through each network defined in the deployedContracts to send messages.
-  for (const network in deployedContracts) {
-    const supportedNetwork = network as SupportedNetworks;
-    // Retrieve the receiver's address.
-    const receiver = (
-      deployedContracts[supportedNetwork] as { receiver: string }
-    ).receiver;
+  const receipt = await tx.wait();
 
-    // Check if a receiver is defined for the current network.
-    if (receiver) {
-      // Retrieve the chain selector ID for the destination network.
-      const destinationChainSelector =
-        getCCIPConfig(supportedNetwork).chainSelector;
+  if (receipt) {
+    // Now, access the logs and decode the event
+    for (const log of receipt.logs) {
+      try {
+        // Attempt to decode the log using the interface
+        const parsedLog = sender.interface.parseLog(log);
+        if (parsedLog && parsedLog.name === "UsdcTransferred") {
+          console.debug("UsdcTransferred", parsedLog);
 
-      // Send messages with different iterations and gas limits.
-      for (const { iterations, gasLimit } of testParams) {
-        tx = await sender.sendMessagePayLINK(
-          destinationChainSelector,
-          receiver,
-          iterations,
-          gasLimit
-        );
-        // Wait for the transaction confirmation with 5 block confirmations.
-        const receipt = await tx.wait(5);
-
-        // After confirmation, parse the transaction receipt logs to extract message IDs.
-        if (receipt) {
-          for (const log of receipt.logs) {
-            try {
-              // Attempt to parse the log using the Sender contract's interface.
-              const parsedLog = sender.interface.parseLog(log);
-              // If the log is related to a message being sent, store its ID.
-              if (parsedLog && parsedLog.name === "MessageSent") {
-                const messageId = parsedLog.args.messageId;
-
-                messageIds.push({
-                  iterations,
-                  gasLimit,
-                  messageId,
-                });
-              }
-            } catch (error) {
-              // This log is not part of the contract, ignore it
-            }
-          }
+          const messageId = parsedLog.args.messageId;
+          console.log("Message ID:", messageId);
+          break; // Once we find the event, no need to keep searching
         }
+      } catch (err) {
+        // If the log isn't from your contract, it won't be parsed successfully
+        continue;
       }
     }
   }
 
-  // Log the IDs of all messages that were successfully sent.
-  messageIds.forEach(({ iterations, gasLimit, messageId }) => {
-    console.log(
-      `Number of iterations ${iterations} - Gas limit: ${gasLimit} - Message Id: ${messageId}`
-    );
-  });
+  // // Retrieve gas used from the last message executed by querying the router's events.
+  // const mockRouterEvents = await router.queryFilter(router.filters.MsgExecuted);
+  // const mockRouterEvent = mockRouterEvents[mockRouterEvents.length - 1]; // check last event
+  // const gasUsed = mockRouterEvent.args.gasUsed;
+
+  // // Push the report of iterations and gas used to the array.
+  // gasUsageReport.push({
+  //   iterations,
+  //   gasUsed: gasUsed.toString(),
+  // });
 }
 
 // Execute the sendCCIPMessages function with the current network.

@@ -247,3 +247,39 @@ I do it with the script:
 ```bash
 $ npx hardhat --network ethereumSepolia run scripts/allowAvalancheFujiForCrossChainReceiver.ts
 ```
+
+I go to the USDC token contract (`0x5425890298aed601595a70AB815c96711a31Bc65`) (on Avalanche Fuji) and I approve
+the spender TransferUSDC Smart Contract (`0x0881F2eB42931C565c3dEf5c0b1DB302A2505E9d`) to spend `1` USDC i.e. `1000000`
+from my Avalanche Fuji USDC balance.
+
+Then I run the script:
+
+```bash
+$ npx hardhat --network avalancheFuji run scripts/transferUsdcToMyEthereumSepoliaWalletExercise2.ts
+```
+
+This gave me the transaction hash: `0x7a937b1ee2a9a55209191201801ae1513963d710691df77336948087bf79e322` which I can watch
+on [CCIP explorer](https://ccip.chain.link/msg/0xa20dd2b56be4003ecf2cf6eae65dc82cb9565e25eefbaea6435f767939ef3ef6).
+
+I waited until this has become "Success".
+
+Then I confirmed that my `Ethereum Sepolia` account had one more USDC.
+
+But, the Gas Limit was `500_000` as initially set in the body of the method, hard coded. Can I know how much was actually
+used? I can trace it in Tenderly, using the destination transaction hash, I go to Tenderly and I try to locate
+the function call `_callWithExactGasSafeReturnData` with payload the message id `0xa20dd2b56be4003ecf2cf6eae65dc82cb9565e25eefbaea6435f767939ef3ef6`.
+We are looking for the call trace from Router to CrossChainReceiver.
+
+```
+"gas":{
+  "gas_left":7463927
+  "gas_used":193309
+  "total_gas_used":536073
+}
+```
+We set gas limit to `500_000`, but the actual initial gas assumed was `7_463_927`. Maybe network was congested.
+But, at the end, `gas_used` is giving `193_309`.
+
+Do we have any other means to estimate the gas?
+
+1. We can use the `MockCCIPRouter` contract:

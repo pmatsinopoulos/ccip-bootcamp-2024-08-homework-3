@@ -8,6 +8,7 @@ import {ReentrancyGuard} from "@openzeppelin/contracts/utils/ReentrancyGuard.sol
 // Panagiotis Matsinopoulos as a copy from here
 // https://cll-devrel.gitbook.io/ccip-masterclass-4/ccip-masterclass/exercise-2-deposit-transferred-usdc-to-compound-v3
 // when working on the Homework for Day 3 of the CCIP Bootcamp
+// New version with no viaIR and EVM being paris
 
 interface IFauceteer {
     function drip(address token) external;
